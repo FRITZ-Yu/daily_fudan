@@ -2,7 +2,7 @@ name: "Daily Fudan"
 
 on:
   schedule:
-    - cron: "0 22 * * *"  # scheduled at 06:00 (UTC+8) everyday
+    - cron: "7 1,5 * * *"  # scheduled at 09:07 & 13:07 (UTC+8) everyday
   workflow_dispatch:
 
 env:
@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --global user.name  github-actions
           git config --global user.email github-actions@github.com
-          git remote add upstream https://github.com/ho12363/daily_fudan
+          git remote add upstream https://github.com/FRITZ-Yu/daily_fudan
           git pull upstream master --allow-unrelated-histories
           git push origin master
       - name: Set up python
