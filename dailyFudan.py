@@ -11,6 +11,11 @@ import logging
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 
+import requests
+from captcha_break import DailyFDCaptcha
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
 import ddddocr
 
 class Fudan:
