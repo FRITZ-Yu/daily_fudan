@@ -201,20 +201,51 @@ def get_account():
     """
     获取账号信息
     """
-    uid, psw = sys_argv[1].strip().split(' ')
-    return uid, psw
+    uid, psw, IYUU_TOKE = sys_argv[1].strip().split(' ')
+    return uid, psw, IYUU_TOKE
+
+def iyuu(IYUU_TOKEN):
+    url = f"https://iyuu.cn/{IYUU_TOKEN}.send"
+    headers = {'Content-type': 'application/x-www-form-urlencoded'}
+    def send(text, desp=""):
+        Form = {'text': text, 'desp': desp}
+        return requests.post(url, data=Form, headers=headers, verify=False)
+    return send
 
 if __name__ == '__main__':
-    uid, psw = get_account()
+    uid, psw, IYUU_TOKE = get_account()
+    
+    if IYUU_TOKE: #有token则通知，无token不通知
+        if IYUU_TOKE.startswith('IYUU'):
+            iy_info = iyuu(IYUU_TOKE)
+        else:
+            def iy_info(text, desp=""):
+                pass
+    else:
+        def iy_info(text, desp=""):
+            pass
+        logging.error("请按readme操作，以正确完成配置～\n")
+        sys_exit(1)
+        
     # logging.debug("ACCOUNT：" + uid + psw)
     zlapp_login = 'https://uis.fudan.edu.cn/authserver/login?' \
                   'service=https://zlapp.fudan.edu.cn/site/ncov/fudanDaily'
     daily_fudan = Zlapp(uid, psw, url_login=zlapp_login)
-    daily_fudan.login()
+    if not daily_fudan.login():
+        iy_info("平安复旦：登陆失败")
+        sys_exit()
 
-    daily_fudan.check()
+    if daily_fudan.check():
+        iy_info("平安复旦：今日已填写")
+        sys_exit()
+
     daily_fudan.checkin()
     # 再检查一遍
     daily_fudan.check()
+    if daily_fudan.check():
+        iy_info("平安复旦：今日已提交")
+    else:
+        iy_info("平安复旦：本次提交失败")
 
     daily_fudan.close()
+    sys_exit()
