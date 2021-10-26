@@ -99,9 +99,11 @@ class Fudan:
 
         if post.status_code == 302:
             logging.debug("登录成功")
+            return 1
         else:
             logging.debug("登录失败，请检查账号信息")
-            self.close()
+            return 0
+            #self.close()
 
     def logout(self):
         """
