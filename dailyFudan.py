@@ -201,8 +201,8 @@ def get_account():
     """
     获取账号信息
     """
-    uid, psw, IYUU_TOKE = sys_argv[1].strip().split(' ')
-    return uid, psw, IYUU_TOKE
+    uid, psw, IYUU_TOKEN = sys_argv[1].strip().split(' ')
+    return uid, psw, IYUU_TOKEN
 
 def iyuu(IYUU_TOKEN):
     url = f"https://iyuu.cn/{IYUU_TOKEN}.send"
@@ -213,11 +213,11 @@ def iyuu(IYUU_TOKEN):
     return send
 
 if __name__ == '__main__':
-    uid, psw, IYUU_TOKE = get_account()
+    uid, psw, IYUU_TOKEN = get_account()
     
-    if IYUU_TOKE: #有token则通知，无token不通知
-        if IYUU_TOKE.startswith('IYUU'):
-            iy_info = iyuu(IYUU_TOKE)
+    if IYUU_TOKEN: #有token则通知，无token不通知
+        if IYUU_TOKEN.startswith('IYUU'):
+            iy_info = iyuu(IYUU_TOKEN)
         else:
             def iy_info(text, desp=""):
                 pass
