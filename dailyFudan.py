@@ -55,6 +55,7 @@ class Fudan:
             return page_login.text
         else:
             logging.debug("Fail to open Login Page, Check your Internet connection\n")
+            iy_info("Fail to open Login Page, Check your Internet connection\n")
             self.close()
 
     def login(self):
@@ -150,10 +151,12 @@ class Zlapp(Fudan):
 
         if last_info["d"]["info"]["date"] == today:
             logging.info("今日已提交")
-            self.close()
+            return 1
+            #self.close()
         else:
             logging.info("未提交")
             self.last_info = last_info["d"]["info"]
+            return 0
 
     def getCode(self):
         img_src = "https://zlapp.fudan.edu.cn/backend/default/code"
@@ -247,7 +250,6 @@ if __name__ == '__main__':
 
     daily_fudan.checkin()
     # 再检查一遍
-    daily_fudan.check()
     if daily_fudan.check():
         iy_info("平安复旦：今日已提交")
     else:
