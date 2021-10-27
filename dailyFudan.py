@@ -241,19 +241,19 @@ if __name__ == '__main__':
                   'service=https://zlapp.fudan.edu.cn/site/ncov/fudanDaily'
     daily_fudan = Zlapp(uid, psw, url_login=zlapp_login)
     if not daily_fudan.login():
-        iy_info("平安复旦：登陆失败")
+        iy_info("平安复旦：登陆失败", "https://zlapp.fudan.edu.cn/site/ncovfudan/daily")
         sys_exit()
 
     if daily_fudan.check():
-        iy_info("平安复旦：今日已填写")
+        # iy_info("平安复旦：今日已填写")
         sys_exit()
 
     daily_fudan.checkin()
     # 再检查一遍
     if daily_fudan.check():
-        iy_info("平安复旦：今日已提交")
+        # iy_info("平安复旦：今日已提交")
     else:
-        iy_info("平安复旦：本次提交失败")
+        iy_info("平安复旦：本次提交失败", "https://zlapp.fudan.edu.cn/site/ncovfudan/daily")
 
     daily_fudan.close()
     sys_exit()
