@@ -251,6 +251,7 @@ if __name__ == '__main__':
     daily_fudan.checkin()
     # 再检查一遍
     if daily_fudan.check():
+        pass
         # iy_info("平安复旦：今日已提交")
     else:
         iy_info("平安复旦：本次提交失败", "https://zlapp.fudan.edu.cn/site/ncovfudan/daily")
